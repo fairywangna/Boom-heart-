@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>全屏轮播</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		ul {
+			list-style: none;
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+		ul li {
+			width: 100%;
+			height: 500px;
+			position: absolute;
+			top: 0;
+			background: url(images/01.jpg) no-repeat center 55%;
+			background-size: inherit;
+			display: none;
+		}
+		ul li:nth-child(2) {
+			background-image: url(images/02.jpg);
+		}
+		ul li:nth-child(3) {
+			background-image: url(images/03.jpg);
+		}
+		ul li:nth-child(4) {
+			background-image: url(images/04.jpg);
+		}
+		ul li:nth-child(5) {
+			background-image: url(images/05.jpg);
+		}
+		#banner {
+			position: relative;
+			width: 100%;
+			height: 500px;
+		}
+		.current {
+			z-index: 1;
+			display: block;
+		}
+		.show {
+			display: block;
+		}
+		#clickLeft,#clickRight {
+			width: 35px;
+			background-color: rgba(0, 0, 0, .3);
+			font-family: consolas;
+			font-size: 30px;
+			text-decoration: none;
+			color: #ccc;
+			text-align: center;
+			line-height: 60px;
+			position: absolute;
+			top: 50%;
+			margin-top: -30px;
+			z-index: 2;
+			display: none;
+		}
+		#clickLeft {
+			left: 0;
+		}
+		#clickRight {
+			right: 0;
+		}
+	</style>
+	<script src="jquery-1.12.2.min.js"></script>
+</head>
+<body>
+<div id="banner">
+	<ul id="bannerList"></ul>
+	<a href="javascript:;" id="clickLeft">&lt;</a>
+	<a href="javascript:;" id="clickRight">&gt;</a>
+</div>
+<script>	
+	$(document).ready(function(){
+		var images = ["01.jpg","02.jpg","03.jpg","04.jpg","05.jpg"]
+		for(var i = 0; i < images.length; i++) {
+			var newLi = document.createElement("li");
+			$("#bannerList").append(newLi);
+		}
+		$("#bannerList>li:first-child").addClass("current"); 
+		$("#bannerList>li:last-child").addClass("show"); 
+
+
+		//全屏轮播代码
+		var timer = null;
+		var index = 0;
+		//事件截流
+		var last = null;
+		// 左边的全屏轮播
+			// 开始定时器 先加加  后判断  再执行
+			fun();
+		function fun() {
+			timer = setInterval(function() {
+				index++;
+				if(index > $("li").length - 1) {
+					index = 0;
+				}
+				//排他思想添加当前显示zindex
+				for(var i = 0; i < $("li").length; i++) {
+					$("li")[i].removeAttribute("class")
+				}
+				$("li")[index].setAttribute("class","current");
+				if(index === 0) {
+					$("li")[$("li").length - 1].setAttribute("class","show");
+				}else {
+					$("li")[index - 1].setAttribute("class","show");
+				}
+				$("li")[index].style.left = $("li")[index].clientWidth + "px";
+				$("li").animate({left:"0"}, 1000);
+			}, 3000)
+		}
+/*		function autoplayLeft() {
+			index++;
+			if(index > $("li").length - 1) {
+				index = 0;
+			}
+			//排他思想添加当前显示zindex
+			for(var i = 0; i < $("li").length; i++) {
+				$("li")[i].removeAttribute("class")
+			}
+			$("li")[index].setAttribute("class","current");
+			if(index === 0) {
+				$("li")[$("li").length - 1].setAttribute("class","show");
+			}else {
+				$("li")[index - 1].setAttribute("class","show");
+			}
+			$("li")[index].style.left = $("li")[index].clientWidth + "px";
+			$("li").animate({left:"0"}, 1000);
+		}*/
+		function autoplay(num) {
+			index++;
+			if(index > $("li").length - 1) {
+				index = 0;
+			}
+			//排他思想添加当前显示zindex
+			for(var i = 0; i < $("li").length; i++) {
+				$("li")[i].removeAttribute("class")
+			}
+			$("li")[index].setAttribute("class","current");
+			if(index === 0) {
+				$("li")[$("li").length - 1].setAttribute("class","show");
+			}else {
+				$("li")[index - 1].setAttribute("class","show");
+			}
+			$("li")[index].style.left = $("li")[index].clientWidth * num + "px";
+			$("li").animate({left:"0"}, 1000);
+		}
+
+/*		function autoplayRight() {
+			index--;
+			if(index < 0) {
+				index = $("li").length - 1;
+			}
+			//排他思想添加当前显示zindex
+			for(var i = 0; i < $("li").length; i++) {
+				$("li")[i].removeAttribute("class")
+			}
+			$("li")[index].setAttribute("class","show");
+			if(index === 0) {
+				$("li")[$("li").length - 1].setAttribute("class","current");
+				$("li")[$("li").length - 1].style.left = -($("li")[$("li").length - 1].clientWidth) + "px";
+			}else {
+				$("li")[index - 1].setAttribute("class","current");
+				$("li")[index - 1].style.left = -($("li")[index - 1].clientWidth) + "px";
+			}
+			$("li").animate({left:"0"}, 1000);
+		}*/
+
+
+		//鼠标经过，停止定时器，显示盒子；
+		$("#banner").hover(function () {
+  			  $("#banner>a").show();
+  			  clearInterval(timer)
+  		},function () {
+  			  $("#banner>a").hide();
+  			  fun();
+  		}); 
+
+  		//左边点击
+  		$("#clickRight").click(function() {
+  			// 使用定时器之前先清除定时器
+  			clearInterval(timer)
+  			clearTimeout(last)
+			// autoplayLeft();
+			last = setTimeout(function() {
+				index++;
+				if(index > $("li").length - 1) {
+					index = 0;
+				}
+				//排他思想添加当前显示zindex
+				for(var i = 0; i < $("li").length; i++) {
+					$("li")[i].removeAttribute("class")
+				}
+				$("li")[index].setAttribute("class","current");
+				if(index === 0) {
+					$("li")[$("li").length - 1].setAttribute("class","show");
+				}else {
+					$("li")[index - 1].setAttribute("class","show");
+				}
+				$("li")[index].style.left = $("li")[index].clientWidth + "px";
+				$("li").animate({left:"0"}, 1000);
+			}, 500)
+  		});
+
+  		//左边点击
+  		$("#clickLeft").click(function() {
+  			// 使用定时器之前先清除定时器
+  			clearInterval(timer)
+  			clearTimeout(last)
+  			last = setTimeout(function() {
+
+				if(index > $("li").length - 1) {
+					index = 0;
+				}
+				//排他思想添加当前显示zindex
+				for(var i = 0; i < $("li").length; i++) {
+					$("li")[i].removeAttribute("class")
+				}
+				$("li")[index].setAttribute("class","show");
+				if(index === $("li").length - 1) {
+					$("li")[0].setAttribute("class","current");
+					$("li")[0].style.left = $("li")[0].clientWidth * -1 + "px";
+				}else {
+					$("li")[index + 1].setAttribute("class","current");
+					$("li")[index + 1].style.left = $("li")[index + 1].clientWidth * -1 + "px";
+				}
+				$("li").animate({left:"0"}, 1000);
+
+				index++;
+			}, 500)
+  		});
+
+		
+	}); 
+</script>
+</body>
+</html>

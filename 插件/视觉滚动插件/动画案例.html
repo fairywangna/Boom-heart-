@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div {
+            width: 212px;
+            height: 229px;
+            background: red;
+            position: absolute;
+            left: 0;
+            top: 50px;
+        }
+
+        button {
+            width: 60px;
+            height: 30px;
+            background-color: #cccccc;
+        }
+    </style>
+</head>
+<body>
+<button id="btnGo">go</button>
+<button id="btnStop">stop</button>
+<button id="circle">circle</button>
+<div id="box"></div>
+<script>
+    var btnGo = document.getElementById("btnGo");
+    var btnStop = document.getElementById("btnStop");
+    var circle = document.getElementById("circle");
+    var box = document.getElementById("box");
+    var timer = null;
+    var flag = true;
+    var count = 0;
+    
+    btnGo.addEventListener('click',function(){
+    	clearInterval(timer)
+    	timer=setInterval(function(){
+    		count+=5
+    		box.style.left=count+'px';
+    		if (count>=800) {
+    			clearInterval(timer)
+    		}	
+    	},15)
+    })
+    btnStop.addEventListener('click',function(){
+    	clearInterval(timer)
+    })
+    circle.addEventListener('click',function(){
+    	clearInterval(timer)
+    	timer=setInterval(function(){   		
+    		if(count>=800){
+    			flag=false
+    		}else if(count<=0){
+    			flag=true
+    		}
+    		flag?count+=2:count-=2
+    		box.style.left=count+'px';
+    	},10)
+    })
+    
+    
+</script>
+</body>
+</html>

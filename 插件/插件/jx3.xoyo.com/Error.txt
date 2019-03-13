@@ -1,0 +1,3 @@
+﻿文件下载网址  =>  文件保存路径
+about:blank  =>  F:\插件\jx3.xoyo.com\images\c39c1a9ab71d41a48ee9ebec5d90bf86.gif
+http://jx3.xoyo.com/assets/website/2015/08/25/images/downbtn_pop.jpg  =>  F:\插件\jx3.xoyo.com\images\downbtn_pop.jpg

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            transform: translate(-50%, -50%);/*他的百分比,是根据自身盒子的大小进行百分比缩放*/
+            background-color: #ff3040;
+            transition: all 1s;
+        }
+
+        div:active {
+            /*transform: translate(100px, 200px); X轴移动100 Y轴移动200*/
+            /*transform: translate(0, 100px); X轴移动0 Y轴移动100*/
+            /*transform: translateX(-100px);X轴向左移动-100px*/
+            /*transform: translateY(-100px); Y轴向上移动-100px*/
+        }
+    </style>
+</head>
+<body>
+<div></div>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        ul {
+            list-style: none
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            width: 1200px;
+            height: 400px;
+            margin: 50px auto;
+/*            border: 1px solid red;*/
+            overflow: hidden;
+        }
+
+        div li {
+            width: 240px;
+            height: 400px;
+            float: left;
+            transition: width .3s ease-in;
+        }
+
+        div ul {
+            width: 1300px;
+        }
+
+
+    </style>
+<!--     <script src="jquery-1.12.2.js"></script> -->
+ 
+</head>
+<body>
+<div id="box">
+    <ul id="ul">
+        <li><img src="images/1.jpg"/></li>
+        <li><img src="images/2.jpg"/></li>
+        <li><img src="images/3.jpg"/></li>
+        <li><img src="images/4.jpg"/></li>
+        <li><img src="images/5.jpg"/></li>
+    </ul>
+
+</div>
+   <script>
+        //1.JQ方法
+        // $(function () {
+        //     $("#box li").mouseover(function () {
+        //         //当前的li的所有的兄弟元素li的宽度设置一下
+        //         $(this).css("width","800px").siblings("li").css("width","100px");
+        //     });
+        //     $("#box li").mouseout(function () {
+        //         $("#box li").css("width","240px");
+        //     });
+        // });
+        var box = document.getElementById('box');
+        var ul = document.getElementById('ul');
+        var lis = document.getElementsByTagName('li');
+        console.dir(lis);
+        //2.for let方法
+        // console.log(ul.children)
+        // for(let i=0;i<ul.children.length;i++){
+        //     ul.children[i].onmouseover=function(){
+        //         for(let k=0 ;k<ul.children.length;k++){
+        //             ul.children[k].style.width='100px'
+        //         }
+        //         console.log(ul.children[i]);
+        //         ul.children[i].style.width='800px';
+        //     }
+        //     ul.children[i].onmouseout=function(){
+        //          for(let k=0 ;k<ul.children.length;k++){
+        //             ul.children[k].style.width='240px'
+        //         }
+        //     }
+        // }
+        //3.for var方法
+        for (var i = 0; i < lis.length; i++) {
+        var li = lis[i];//每一项 冰棍儿
+        li.onmouseover = function () {
+            //干掉所有人
+            for (var i = 0; i < lis.length; i++) {
+                var li = lis[i];//每一个人 每一个input
+                li.style.width = "0px";
+                }
+            //留下我自己
+                this.style.width = "1200px";
+            }
+        li.onmouseout = function(){
+           for (var i = 0; i < lis.length; i++) {
+            var li = lis[i];//每一个人 每一个input
+            li.style.width = "240px";
+            }
+            }
+        }
+        
+
+
+    </script>
+</body>
+</html>
